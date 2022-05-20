@@ -35,4 +35,4 @@ No installation required if you visit the hosted website:
 <!-- ASK IF 'HOW IT WORKS'/'JAVASCRIPT' IS NEEDED -->
 
 ## Wireframe
-![wireframe](project-1-wireframe.jpg)
+![wireframe](/img/project-1-wireframe.jpg)
