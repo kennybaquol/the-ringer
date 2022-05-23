@@ -20,6 +20,12 @@ let isRunning = false;
 // Array that holds all current game pieces
 let pieces = [];
 
+// Booleans to keep track of which keys are pressed down
+let upPressed = false;
+let downPressed = false;
+let leftPressed = false;
+let rightPressed = false;
+
 // Player class with constructor and render function
 class Player {
     constructor() {
@@ -88,6 +94,12 @@ window.addEventListener('keydown', function (e) {
     }
 })
 
+// After the game starts, run keydownHandler when a key is pressed
+window.addEventListener('keydown', keydownHandler);
+
+// After the game starts, run keyupHandler when a key is released
+window.addEventListener('keyup', keyupHandler);
+
 // Run the game
 function startGame() {
     // player = new Player();
@@ -96,12 +108,10 @@ function startGame() {
     prompt = document.getElementById('prompt');
     prompt.style.display = "none";
     isRunning = true;
-    setTimeout(firstLaser, 1000);
-    const runGame = setInterval(gameLoop, 100);
+    // setTimeout(firstLaser, 1000);
+    firstPhase();
+    const runGame = setInterval(gameLoop, 10);
 }
-
-// After the game starts, run movementHandler when a key is pressed
-window.addEventListener('keydown', movementHandler);
 
 /**
  * GAME PROCESSES
@@ -110,29 +120,53 @@ window.addEventListener('keydown', movementHandler);
 // Begin game loop/constantly clear and re-render the player
 function gameLoop() {
     ctx.clearRect(0, 0, board.width, board.height);
+    checkPlayerMovement();
     renderAll();
 }
 
-// Spawn first laser (obstacle)
-function firstLaser() {
-    console.log("ran first laser");
-    const arrow = new Obstacle(50, 5, 'white', 5, 100);
-    // arrow.render();
+function checkPlayerMovement() {
+    if (upPressed === true) {
+        player.y > 0 ? player.y -= 8 : null;
+    }
+    if (downPressed === true) {
+        player.y < (board.height - player.height) ? player.y += 8 : null;
+    }
+    if (leftPressed === true) {
+        player.x > 0 ? player.x -= 8 : null;
+    }
+    if (rightPressed === true) {
+        player.x < (board.width - player.width) ? player.x += 8 : null;
+    }
+}
+
+// Start first phase
+function firstPhase() {
+    console.log("running first phase");
+    for (let i = 1; i <= 8; i++) {
+
+        fireArrow(50+i*20, -99, 'white', 5, 100);
+    }
+    // const arrow = new Obstacle(50, -99, 'white', 5, 100);
+    // pieces.push(arrow);
+    // movePiece(arrow);
+    // console.log(arrow);
+}
+
+function fireArrow(x, y, color, width, height) {
+    const arrow = new Obstacle(x, y, color, width, height);
     pieces.push(arrow);
-    animatePiece(arrow);
+    movePiece(arrow);
 }
 
-
+// Move obstacles
 function movePiece(piece) {
-    piece.y += 10;
     console.log(piece);
+    piece.y += 8;
+    if (piece.y < board.height) {
+        setTimeout(movePiece, 10, piece);
+    }
 }
 
-// Animate arrow
-function animatePiece(piece) {
-    console.log(`running animatePiece`);
-    setInterval(movePiece, 100, piece);
-}
 
 /**
  * COLLISION DETECTION
@@ -145,34 +179,35 @@ function animatePiece(piece) {
 */
 
 // Movement handler that lets the player move with WASD or the Arrow Keys
-function movementHandler(e) {
-    switch (e.key) {
-        case "w":
-            player.y > 0 ? player.y -= 10 : null;
-            break;
-        case "s":
-            player.y < (board.height - player.height) ? player.y += 10 : null;
-            break;
-        case "a":
-            player.x > 0 ? player.x -= 10 : null;
-            break;
-        case "d":
-            player.x < (board.width - player.width) ? player.x += 10 : null;
-            break;
-        case "ArrowUp":
-            player.y > 0 ? player.y -= 10 : null;
-            break;
-        case "ArrowDown":
-            player.y < (board.height - player.height) ? player.y += 10 : null;
-            break;
-        case "ArrowLeft":
-            player.x > 0 ? player.x -= 10 : null;
-            break;
-        case "ArrowRight":
-            player.x < (board.width - player.width) ? player.x += 10 : null;
-            break;
+function keydownHandler(e) {
+    if (e.key === "w" || e.key === "ArrowUp") {
+        upPressed = true;
     }
-    console.log(player);
+    if (e.key === "s" || e.key === "ArrowDown") {
+        downPressed = true;
+    }
+    if (e.key === "a" || e.key === "ArrowLeft") {
+        leftPressed = true;
+    }
+    if (e.key === "d" || e.key === "ArrowRight") {
+        rightPressed = true;
+    }
+}
+
+// Movement handler that lets the player move with WASD or the Arrow Keys
+function keyupHandler(e) {
+    if (e.key === "w" || e.key === "ArrowUp") {
+        upPressed = false;
+    }
+    if (e.key === "s" || e.key === "ArrowDown") {
+        downPressed = false;
+    }
+    if (e.key === "a" || e.key === "ArrowLeft") {
+        leftPressed = false;
+    }
+    if (e.key === "d" || e.key === "ArrowRight") {
+        rightPressed = false;
+    }
 }
 
 // Detect if the player has been hit
