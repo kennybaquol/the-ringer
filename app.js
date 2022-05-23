@@ -17,6 +17,9 @@ let prompt;
 // Variable to tell if the game is live
 let isRunning = false;
 
+// Array that holds all current game pieces
+let pieces = [];
+
 // Player class with constructor and render function
 class Player {
     constructor() {
@@ -31,7 +34,29 @@ class Player {
     render() {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
-        console.log(`ran render`);
+    }
+}
+
+// Obstacles class with constructor and render function
+class Obstacle {
+    constructor(x, y, color, width, height) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.width = width;
+        this.height = height;
+    }
+
+    render() {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+}
+
+// Render all current game pieces
+function renderAll() {
+    for (let i = 0; i < pieces.length; i++) {
+        pieces[i].render();
     }
 }
 
@@ -39,6 +64,7 @@ class Player {
 (function () {
     player = new Player();
     player.render();
+    pieces.push(player);
 })()
 
 /** 
@@ -62,20 +88,50 @@ window.addEventListener('keydown', function (e) {
     }
 })
 
-// Create and render the player
+// Run the game
 function startGame() {
-    player = new Player();
-    console.log(player);
-    player.render();
+    // player = new Player();
+    // console.log(player);
+    // player.render();
     prompt = document.getElementById('prompt');
     prompt.style.display = "none";
     isRunning = true;
-    const runGame = setInterval(gameLoop, 10);
+    setTimeout(firstLaser, 1000);
+    const runGame = setInterval(gameLoop, 100);
 }
 
 // After the game starts, run movementHandler when a key is pressed
 window.addEventListener('keydown', movementHandler);
 
+/**
+ * GAME PROCESSES
+*/
+
+// Begin game loop/constantly clear and re-render the player
+function gameLoop() {
+    ctx.clearRect(0, 0, board.width, board.height);
+    renderAll();
+}
+
+// Spawn first laser (obstacle)
+function firstLaser() {
+    console.log("ran first laser");
+    const arrow = new Obstacle(50, 5, 'white', 5, 100);
+    // arrow.render();
+    pieces.push(arrow);
+}
+
+/**
+ * COLLISION DETECTION
+*/
+
+
+
+/**
+ * KEYBOARD INTERACTION LOGIC
+*/
+
+// Movement handler that lets the player move with WASD or the Arrow Keys
 function movementHandler(e) {
     switch (e.key) {
         case "w":
@@ -105,26 +161,6 @@ function movementHandler(e) {
     }
     console.log(player);
 }
-
-/**
- * KEYBOARD INTERACTION LOGIC
-*/
-
-// Movement handler that lets the player move with WASD or the Arrow Keys
-
-
-/**
- * GAME PROCESSES
-*/
-
-function gameLoop() {
-    ctx.clearRect(0, 0, board.width, board.height);
-    player.render();
-}
-
-/**
- * COLLISION DETECTION
-*/
 
 // Detect if the player has been hit
 
