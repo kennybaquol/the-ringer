@@ -148,20 +148,33 @@ function checkPlayerMovement() {
 /**
  * COLLISION DETECTION
 */
-
+let something = 0;
 function hitDetected() {
     let isHitDetected = false;
 
-    for (let i = 1; i < pieces.length; i++) {
+    // for (let i = 1; i < pieces.length; i++) {
+    for (let i = 0; i < 8; i++) {
         // if the player is touching the current element of the array
-        isHitDetected = (player.x + player.width > pieces[i].x) &&
-            (player.x < pieces[i].x + pieces[i].width) &&
-            (player.y + player.height > pieces[i].y) &&
-            (player.y < pieces[i].y + pieces[i].height);
-        console.log(`checking piece ${i}:`);
-        console.log(pieces[i]);
+        isHitDetected = (player.x + player.width > pieces[1].x) &&
+            (player.x < pieces[1].x + pieces[1].width) &&
+            (player.y + player.height > pieces[1].y) &&
+            (player.y < pieces[1].y + pieces[1].height) ||
+
+            (player.x + player.width > pieces[2].x) &&
+            (player.x < pieces[2].x + pieces[2].width) &&
+            (player.y + player.height > pieces[2].y) &&
+            (player.y < pieces[2].y + pieces[2].height) ||
+
+            (player.x + player.width > pieces[3].x) &&
+            (player.x < pieces[3].x + pieces[3].width) &&
+            (player.y + player.height > pieces[3].y) &&
+            (player.y < pieces[3].y + pieces[3].height)
+            ;
+        // console.log(`checking piece ${i}:`);
+        // console.log(pieces[i]);
     }
-    console.log(isHitDetected);
+    something++;
+    console.log(something);
     return isHitDetected;
 }
 
@@ -181,6 +194,7 @@ function firstPhase() {
         setTimeout(function () {
             for (let i = 1; i <= 8; i++) {
                 if (j % 2 === 0) {
+                    setTimeout(fireArrow, i * 10, (i * 20), -99, 'white', 5, 100);
                     fireArrow((i * 20), -99, 'white', 5, 100);
                 }
                 else {
@@ -190,8 +204,9 @@ function firstPhase() {
         }, j * 1000)
     }
 
-    const arrow = new Obstacle(100, 100, 'white', 5, 100);
-    pieces.push(arrow);
+    // TEST ARROW
+    // const arrow = new Obstacle(100, 100, 'white', 5, 100);
+    // pieces.push(arrow);
 }
 
 function fireArrow(x, y, color, width, height) {
