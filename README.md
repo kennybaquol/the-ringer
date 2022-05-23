@@ -9,7 +9,7 @@ The player begins on a static background. When they hit the start button, the mo
 - [] Display a game in the browser
 - [] Switch turns between two players, or have the user play the computer (AI or obstacles)
 - [] Design logic for winning & visually display which player won
-- [] Include separate HTML / CSS / JavaScript files	
+- [X] Include separate HTML / CSS / JavaScript files	
 - [] Stick with KISS (Keep It Simple Stupid) and DRY (Don't Repeat Yourself) principles	
 - [] Use Javascript for DOM manipulation 	
 - [] Deploy your game online, where the rest of the world can access it**	
@@ -35,4 +35,4 @@ No installation required if you visit the hosted website:
 <!-- ASK IF 'HOW IT WORKS'/'JAVASCRIPT' IS NEEDED -->
 
 ## Wireframe
-![wireframe](/img/project-1-wireframe.jpg)
+![wireframe](https://github.com/kennybaquol/working-title/blob/3e4c8e7e8c4cb951b2aeb8c778a837163533fbc2/imgs/project-1-wireframe.jpg)
