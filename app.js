@@ -39,7 +39,6 @@ class Player {
 (function () {
     player = new Player();
     player.render();
-    // const runGame = setInterval(gameLoop, 100);
 })()
 
 /** 
@@ -71,9 +70,41 @@ function startGame() {
     prompt = document.getElementById('prompt');
     prompt.style.display = "none";
     isRunning = true;
+    const runGame = setInterval(gameLoop, 10);
 }
 
 // After the game starts, run movementHandler when a key is pressed
+window.addEventListener('keydown', movementHandler);
+
+function movementHandler(e) {
+    switch (e.key) {
+        case "w":
+            player.y > 0 ? player.y -= 10 : null;
+            break;
+        case "s":
+            player.y < (board.height - player.height) ? player.y += 10 : null;
+            break;
+        case "a":
+            player.x > 0 ? player.x -= 10 : null;
+            break;
+        case "d":
+            player.x < (board.width - player.width) ? player.x += 10 : null;
+            break;
+        case "ArrowUp":
+            player.y > 0 ? player.y -= 10 : null;
+            break;
+        case "ArrowDown":
+            player.y < (board.height - player.height) ? player.y += 10 : null;
+            break;
+        case "ArrowLeft":
+            player.x > 0 ? player.x -= 10 : null;
+            break;
+        case "ArrowRight":
+            player.x < (board.width - player.width) ? player.x += 10 : null;
+            break;
+    }
+    console.log(player);
+}
 
 /**
  * KEYBOARD INTERACTION LOGIC
@@ -86,6 +117,10 @@ function startGame() {
  * GAME PROCESSES
 */
 
+function gameLoop() {
+    ctx.clearRect(0, 0, board.width, board.height);
+    player.render();
+}
 
 /**
  * COLLISION DETECTION
