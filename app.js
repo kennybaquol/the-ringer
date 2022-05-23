@@ -119,6 +119,19 @@ function firstLaser() {
     const arrow = new Obstacle(50, 5, 'white', 5, 100);
     // arrow.render();
     pieces.push(arrow);
+    animatePiece(arrow);
+}
+
+
+function movePiece(piece) {
+    piece.y += 10;
+    console.log(piece);
+}
+
+// Animate arrow
+function animatePiece(piece) {
+    console.log(`running animatePiece`);
+    setInterval(movePiece, 100, piece);
 }
 
 /**
