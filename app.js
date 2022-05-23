@@ -14,6 +14,9 @@ let player;
 // Variable to control the text below the game board
 let prompt;
 
+// Variable to control interval timer
+let runGame;
+
 // Variable to tell if the game is live
 let isRunning = false;
 
@@ -66,12 +69,13 @@ function renderAll() {
     }
 }
 
-// Create and render the player, then run the game
-(function () {
+// Create and render the player
+createPlayer();
+function createPlayer() {
     player = new Player();
     player.render();
     pieces.push(player);
-})()
+}
 
 /** 
  * EVENT LISTENERS
@@ -83,7 +87,7 @@ function renderAll() {
 
 // When the user presses Enter, create and render the player then start the game
 window.addEventListener('keydown', function (e) {
-    console.log(`the ${e.key} key was pressed`);
+    // console.log(`the ${e.key} key was pressed`);
 
     if (!isRunning) {
         switch (e.key) {
@@ -106,7 +110,7 @@ function startGame() {
     prompt.style.display = "none";
     isRunning = true;
     firstPhase();
-    const runGame = setInterval(gameLoop, 10);
+    runGame = setInterval(gameLoop, 1);
 }
 
 /**
@@ -118,6 +122,12 @@ function gameLoop() {
     ctx.clearRect(0, 0, board.width, board.height);
     checkPlayerMovement();
     renderAll();
+    // console.log(hitDetected());
+    if (hitDetected() === true) {
+        clearInterval(runGame);
+        gameOver();
+        return;
+    }
 }
 
 function checkPlayerMovement() {
@@ -135,6 +145,35 @@ function checkPlayerMovement() {
     }
 }
 
+/**
+ * COLLISION DETECTION
+*/
+
+function hitDetected() {
+    let isHitDetected = false;
+
+    for (let i = 1; i < pieces.length; i++) {
+        // if the player is touching the current element of the array
+        isHitDetected = (player.x + player.width > pieces[i].x) &&
+            (player.x < pieces[i].x + pieces[i].width) &&
+            (player.y + player.height > pieces[i].y) &&
+            (player.y < pieces[i].y + pieces[i].height);
+        console.log(`checking piece ${i}:`);
+        console.log(pieces[i]);
+    }
+    console.log(isHitDetected);
+    return isHitDetected;
+}
+
+// End game
+function gameOver() {
+    // isRunning = false;
+    // prompt.style.display = "inline";
+    pieces = [];
+    console.log(pieces);
+    // createPlayer();
+}
+
 // Start first phase
 function firstPhase() {
     console.log("running first phase");
@@ -150,6 +189,9 @@ function firstPhase() {
             }
         }, j * 1000)
     }
+
+    const arrow = new Obstacle(100, 100, 'white', 5, 100);
+    pieces.push(arrow);
 }
 
 function fireArrow(x, y, color, width, height) {
@@ -162,17 +204,17 @@ function fireArrow(x, y, color, width, height) {
 function movePiece(piece) {
     // console.log(piece);
     piece.y += 8;
+
+    // If the piece is still on screen, keep moving it
     if (piece.y < board.height) {
         setTimeout(movePiece, 10, piece);
     }
+    // Otherwise, stop moving it, and remove it from the pieces array
+    else {
+        pieces.splice(pieces.indexOf(piece), 1);
+        // console.log(pieces);
+    }
 }
-
-
-/**
- * COLLISION DETECTION
-*/
-
-
 
 /**
  * KEYBOARD INTERACTION LOGIC
