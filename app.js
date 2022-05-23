@@ -102,13 +102,9 @@ window.addEventListener('keyup', keyupHandler);
 
 // Run the game
 function startGame() {
-    // player = new Player();
-    // console.log(player);
-    // player.render();
     prompt = document.getElementById('prompt');
     prompt.style.display = "none";
     isRunning = true;
-    // setTimeout(firstLaser, 1000);
     firstPhase();
     const runGame = setInterval(gameLoop, 10);
 }
@@ -126,30 +122,34 @@ function gameLoop() {
 
 function checkPlayerMovement() {
     if (upPressed === true) {
-        player.y > 0 ? player.y -= 8 : null;
+        player.y > 0 ? player.y -= 4 : null;
     }
     if (downPressed === true) {
-        player.y < (board.height - player.height) ? player.y += 8 : null;
+        player.y < (board.height - player.height) ? player.y += 4 : null;
     }
     if (leftPressed === true) {
-        player.x > 0 ? player.x -= 8 : null;
+        player.x > 0 ? player.x -= 4 : null;
     }
     if (rightPressed === true) {
-        player.x < (board.width - player.width) ? player.x += 8 : null;
+        player.x < (board.width - player.width) ? player.x += 4 : null;
     }
 }
 
 // Start first phase
 function firstPhase() {
     console.log("running first phase");
-    for (let i = 1; i <= 8; i++) {
-
-        fireArrow(50+i*20, -99, 'white', 5, 100);
+    for (let j = 0; j < 16; j++) {
+        setTimeout(function () {
+            for (let i = 1; i <= 8; i++) {
+                if (j % 2 === 0) {
+                    fireArrow((i * 20), -99, 'white', 5, 100);
+                }
+                else {
+                    fireArrow(board.width - (i * 20), -99, 'white', 5, 100);
+                }
+            }
+        }, j * 1000)
     }
-    // const arrow = new Obstacle(50, -99, 'white', 5, 100);
-    // pieces.push(arrow);
-    // movePiece(arrow);
-    // console.log(arrow);
 }
 
 function fireArrow(x, y, color, width, height) {
@@ -160,7 +160,7 @@ function fireArrow(x, y, color, width, height) {
 
 // Move obstacles
 function movePiece(piece) {
-    console.log(piece);
+    // console.log(piece);
     piece.y += 8;
     if (piece.y < board.height) {
         setTimeout(movePiece, 10, piece);
