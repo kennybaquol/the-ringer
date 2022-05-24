@@ -109,6 +109,7 @@ function startGame() {
     prompt = document.getElementById('prompt');
     prompt.style.display = "none";
     isRunning = true;
+    // setTimeout(firstPhase, 4000);
     firstPhase();
     runGame = setInterval(gameLoop, 1);
 }
@@ -132,16 +133,16 @@ function gameLoop() {
 
 function checkPlayerMovement() {
     if (upPressed === true) {
-        player.y > 0 ? player.y -= 4 : null;
+        player.y > 0 ? player.y -= 2 : null;
     }
     if (downPressed === true) {
-        player.y < (board.height - player.height) ? player.y += 4 : null;
+        player.y < (board.height - player.height) ? player.y += 2 : null;
     }
     if (leftPressed === true) {
-        player.x > 0 ? player.x -= 4 : null;
+        player.x > 0 ? player.x -= 2 : null;
     }
     if (rightPressed === true) {
-        player.x < (board.width - player.width) ? player.x += 4 : null;
+        player.x < (board.width - player.width) ? player.x += 2 : null;
     }
 }
 
@@ -152,12 +153,12 @@ function checkPlayerMovement() {
 function hitDetected() {
     let isHitDetected = false;
 
-    isHitDetected = pieces.some(function(piece) {
+    isHitDetected = pieces.some(function (piece) {
         return (piece !== pieces[0]) &&
-        (player.x + player.width > piece.x) &&
-        (player.x < piece.x + piece.width) &&
-        (player.y + player.height > piece.y) &&
-        (player.y < piece.y + piece.height);
+            (player.x + player.width > piece.x) &&
+            (player.x < piece.x + piece.width) &&
+            (player.y + player.height > piece.y) &&
+            (player.y < piece.y + piece.height);
     })
     return isHitDetected;
 }
@@ -174,39 +175,78 @@ function gameOver() {
 // Start first phase
 function firstPhase() {
     console.log("running first phase");
-    for (let j = 0; j < 16; j++) {
-        setTimeout(function () {
-            for (let i = 1; i <= 8; i++) {
-                if (j % 2 === 0) {
-                    setTimeout(fireArrow, i * 10, (i * 20), -99, 'white', 5, 100);
-                    fireArrow((i * 20), -99, 'white', 5, 100);
-                }
-                else {
-                    fireArrow(board.width - (i * 20), -99, 'white', 5, 100);
-                }
-            }
-        }, j * 1000)
-    }
+    arrows();
+    setTimeout(flames, 8000);
+    setTimeout(rain, 16000);
 
     // TEST ARROW
     // const arrow = new Obstacle(100, 100, 'white', 5, 100);
     // pieces.push(arrow);
 }
 
+function arrows() {
+    for (let j = 0; j < 32; j++) {
+        setTimeout(function () {
+            for (let i = 1; i <= 4; i++) {
+                if (j % 2 === 0) {
+                    setTimeout(fireArrow, (i - 1) * 250, (i * 40), -99, 'white', 5, 100);
+                }
+                else {
+                    setTimeout(fireArrow, (i - 1) * 250, board.width - (i * 40), -99, 'white', 5, 100);
+                }
+            }
+        }, j * 1000)
+    }
+}
+
+function flames() {
+    for (let i = 0; i < 24; i++) {
+        setTimeout(function () {
+            if (i % 2 === 0) {
+                launchFlame(-199, 125, 'red', 200, 30);
+            }
+            else {
+                launchFlame(-199, 575, 'red', 200, 30);
+            }
+        }, i * 1000)
+    }
+}
+
+function rain() {
+    for (let i = 0; i < 16; i++) {
+        setTimeout(function () {
+            for (let j = 0; j < 9; j++) {
+                setTimeout(commenceRain, j * 125, Math.floor(Math.random()*848) + 1, -4, 'purple', 5, 5);
+            }
+        }, i * 2000)
+    }
+}
+
 function fireArrow(x, y, color, width, height) {
     const arrow = new Obstacle(x, y, color, width, height);
     pieces.push(arrow);
-    movePiece(arrow);
+    movePieceDown(arrow, 8);
+}
+
+function launchFlame(x, y, color, width, height) {
+    const flame = new Obstacle(x, y, color, width, height);
+    pieces.push(flame);
+    movePieceRight(flame, 8);
+}
+
+function commenceRain(x, y, color, width, height) {
+    const rain = new Obstacle(x, y, color, width, height);
+    pieces.push(rain);
+    movePieceDown(rain, 4);
 }
 
 // Move obstacles
-function movePiece(piece) {
+function movePieceUp(piece, rate) {
     // console.log(piece);
-    piece.y += 8;
-
+    piece.y -= rate;
     // If the piece is still on screen, keep moving it
-    if (piece.y < board.height) {
-        setTimeout(movePiece, 10, piece);
+    if (piece.y > 0) {
+        setTimeout(movePieceUp, 11, piece, rate);
     }
     // Otherwise, stop moving it, and remove it from the pieces array
     else {
@@ -214,6 +254,49 @@ function movePiece(piece) {
         // console.log(pieces);
     }
 }
+
+function movePieceDown(piece, rate) {
+    // console.log(piece);
+    piece.y += rate;
+    // If the piece is still on screen, keep moving it
+    if (piece.y < board.height) {
+        setTimeout(movePieceDown, 11, piece, rate);
+    }
+    // Otherwise, stop moving it, and remove it from the pieces array
+    else {
+        pieces.splice(pieces.indexOf(piece), 1);
+        // console.log(pieces);
+    }
+}
+
+function movePieceLeft(piece, rate) {
+    // console.log(piece);
+    piece.x -= rate;
+    // If the piece is still on screen, keep moving it
+    if (piece.x > 0) {
+        setTimeout(movePieceLeft, 11, piece, rate);
+    }
+    // Otherwise, stop moving it, and remove it from the pieces array
+    else {
+        pieces.splice(pieces.indexOf(piece), 1);
+        // console.log(pieces);
+    }
+}
+
+function movePieceRight(piece, rate) {
+    // console.log(piece);
+    piece.x += rate;
+    // If the piece is still on screen, keep moving it
+    if (piece.x < board.width) {
+        setTimeout(movePieceRight, 11, piece, rate);
+    }
+    // Otherwise, stop moving it, and remove it from the pieces array
+    else {
+        pieces.splice(pieces.indexOf(piece), 1);
+        // console.log(pieces);
+    }
+}
+
 
 /**
  * KEYBOARD INTERACTION LOGIC
@@ -250,8 +333,6 @@ function keyupHandler(e) {
         rightPressed = false;
     }
 }
-
-// Detect if the player has been hit
 
 // If so --> stop the music, tell the player they've lost, and prompt them to restart
 
