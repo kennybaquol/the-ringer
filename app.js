@@ -109,8 +109,8 @@ function startGame() {
     prompt = document.getElementById('prompt');
     prompt.style.display = "none";
     isRunning = true;
-    // setTimeout(firstPhase, 4000);
     firstPhase();
+    // secondPhase();
     runGame = setInterval(gameLoop, 1);
 }
 
@@ -178,14 +178,22 @@ function firstPhase() {
     arrows();
     setTimeout(flames, 8000);
     setTimeout(rain, 16000);
+    setTimeout(secondPhase, 32000);
+    // TEST ARROW
+    // const arrow = new Obstacle(100, 100, 'white', 5, 100);
+    // pieces.push(arrow);
+}
 
+function secondPhase() {
+    console.log("running second phase");
+    bumpers();
     // TEST ARROW
     // const arrow = new Obstacle(100, 100, 'white', 5, 100);
     // pieces.push(arrow);
 }
 
 function arrows() {
-    for (let j = 0; j < 32; j++) {
+    for (let j = 0; j < 28; j++) {
         setTimeout(function () {
             for (let i = 1; i <= 4; i++) {
                 if (j % 2 === 0) {
@@ -199,8 +207,23 @@ function arrows() {
     }
 }
 
+function arrows2() {
+    for (let j = 0; j < 12; j++) {
+        setTimeout(function () {
+            for (let i = 1; i <= 4; i++) {
+                if (j % 2 === 0) {
+                    setTimeout(fireArrow, (i - 1) * 125, (i * 40), -99, 'white', 5, 100);
+                }
+                else {
+                    setTimeout(fireArrow, (i - 1) * 250, board.width - (i * 40), -99, 'white', 5, 100);
+                }
+            }
+        }, j * 2000)
+    }
+}
+
 function flames() {
-    for (let i = 0; i < 24; i++) {
+    for (let i = 0; i < 20; i++) {
         setTimeout(function () {
             if (i % 2 === 0) {
                 launchFlame(-199, 125, 'red', 200, 30);
@@ -213,12 +236,25 @@ function flames() {
 }
 
 function rain() {
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < 8; i++) {
         setTimeout(function () {
-            for (let j = 0; j < 9; j++) {
+            for (let j = 0; j < 8; j++) {
                 setTimeout(commenceRain, j * 125, Math.floor(Math.random()*848) + 1, -4, 'purple', 5, 5);
             }
         }, i * 2000)
+    }
+}
+
+function bumpers() {
+    for (let i = 0; i < 64; i++) {
+        setTimeout(function () {
+            if (i % 2 === 0) {
+                throwBumper(0, board.height, 'blue', board.width/2, 30);
+            }
+            else {
+                throwBumper(board.width/2, board.height, 'blue', board.width/2, 30);
+            }
+        }, i * 500)
     }
 }
 
@@ -240,11 +276,17 @@ function commenceRain(x, y, color, width, height) {
     movePieceDown(rain, 4);
 }
 
+function throwBumper(x, y, color, width, height) {
+    const bumper = new Obstacle(x, y, color, width, height);
+    pieces.push(bumper);
+    movePieceUp(bumper, 8);
+}
+
 // Move obstacles
 function movePieceUp(piece, rate) {
     // console.log(piece);
     piece.y -= rate;
-    // If the piece is still on screen, keep moving it
+    // 
     if (piece.y > 0) {
         setTimeout(movePieceUp, 11, piece, rate);
     }
