@@ -148,33 +148,17 @@ function checkPlayerMovement() {
 /**
  * COLLISION DETECTION
 */
-let something = 0;
+
 function hitDetected() {
     let isHitDetected = false;
 
-    // for (let i = 1; i < pieces.length; i++) {
-    for (let i = 0; i < 8; i++) {
-        // if the player is touching the current element of the array
-        isHitDetected = (player.x + player.width > pieces[1].x) &&
-            (player.x < pieces[1].x + pieces[1].width) &&
-            (player.y + player.height > pieces[1].y) &&
-            (player.y < pieces[1].y + pieces[1].height) ||
-
-            (player.x + player.width > pieces[2].x) &&
-            (player.x < pieces[2].x + pieces[2].width) &&
-            (player.y + player.height > pieces[2].y) &&
-            (player.y < pieces[2].y + pieces[2].height) ||
-
-            (player.x + player.width > pieces[3].x) &&
-            (player.x < pieces[3].x + pieces[3].width) &&
-            (player.y + player.height > pieces[3].y) &&
-            (player.y < pieces[3].y + pieces[3].height)
-            ;
-        // console.log(`checking piece ${i}:`);
-        // console.log(pieces[i]);
-    }
-    something++;
-    console.log(something);
+    isHitDetected = pieces.some(function(piece) {
+        return (piece !== pieces[0]) &&
+        (player.x + player.width > piece.x) &&
+        (player.x < piece.x + piece.width) &&
+        (player.y + player.height > piece.y) &&
+        (player.y < piece.y + piece.height);
+    })
     return isHitDetected;
 }
 
