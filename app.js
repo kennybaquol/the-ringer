@@ -109,8 +109,8 @@ function startGame() {
     prompt = document.getElementById('prompt');
     prompt.style.display = "none";
     isRunning = true;
-    firstPhase();
-    // secondPhase();
+    // firstPhase();
+    secondPhase();
     runGame = setInterval(gameLoop, 1);
 }
 
@@ -177,18 +177,25 @@ function firstPhase() {
     console.log("running first phase");
     arrows();
     setTimeout(flames, 8000);
-    setTimeout(rain, 16000);
+    setTimeout(rain, 16000, 8);
     setTimeout(secondPhase, 32000);
     // TEST ARROW
     // const arrow = new Obstacle(100, 100, 'white', 5, 100);
     // pieces.push(arrow);
 }
 
+// Start second phase
 function secondPhase() {
     console.log("running second phase");
     bumpers();
     setTimeout(arrows2, 8000);
     setTimeout(lasers, 16000);
+    setTimeout(interludePhase, 32000);
+}
+
+// Start interlude phase
+function interludePhase() {
+    rain(4);
 }
 
 function arrows() {
@@ -208,7 +215,7 @@ function arrows() {
 
 function arrows2() {
     let direction = 'left';
-    for (let j = 0; j < 28; j++) {
+    for (let j = 0; j < 20; j++) {
         setTimeout(function () {
             for (let l = 0; l < 3; l++) {
                 setTimeout(function () {
@@ -244,8 +251,8 @@ function flames() {
     }
 }
 
-function rain() {
-    for (let i = 0; i < 8; i++) {
+function rain(duration) {
+    for (let i = 0; i < duration; i++) {
         setTimeout(function () {
             for (let j = 0; j < 8; j++) {
                 setTimeout(commenceRain, j * 125, Math.floor(Math.random() * 848) + 1, -4, 'purple', 5, 5);
@@ -271,10 +278,10 @@ function lasers() {
     for (let i = 0; i < 16; i++) {
         setTimeout(function () {
             if (i % 2 === 0) {
-                fireLaser(197, -890, 'orange', 6, 900);
+                fireLaser(197, -880, 'orange', 6, 900);
             }
             else {
-                fireLaser(647, -890, 'orange', 6, 900);
+                fireLaser(647, -880, 'orange', 6, 900);
             }
         }, i * 1000)
     }
