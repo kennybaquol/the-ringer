@@ -109,8 +109,8 @@ function startGame() {
     prompt = document.getElementById('prompt');
     prompt.style.display = "none";
     isRunning = true;
-    // firstPhase();
-    secondPhase();
+    firstPhase();
+    // secondPhase();
     runGame = setInterval(gameLoop, 1);
 }
 
@@ -194,11 +194,11 @@ function secondPhase() {
 }
 
 function arrows() {
-    for (let j = 0; j < 12; j++) {
+    for (let j = 0; j < 30; j++) {
         setTimeout(function () {
-            for (let i = 1; i <= 3; i++) {
-                if (i === 1 || i === 3) {
-                    setTimeout(fireArrow, (i - 1) * 125, (i * 40), -99, 'white', 5, 100);
+            for (let i = 1; i <= 4; i++) {
+                if (j % 2 === 0) {
+                    setTimeout(fireArrow, (i - 1) * 250, (i * 40), -99, 'white', 5, 100);
                 }
                 else {
                     setTimeout(fireArrow, (i - 1) * 250, board.width - (i * 40), -99, 'white', 5, 100);
@@ -234,7 +234,7 @@ function arrows2() {
 }
 
 function flames() {
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 22; i++) {
         setTimeout(function () {
             if (i % 2 === 0) {
                 launchFlame(-199, 125, 'red', 200, 30);
