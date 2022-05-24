@@ -188,9 +188,7 @@ function secondPhase() {
     console.log("running second phase");
     bumpers();
     setTimeout(arrows2, 8000);
-    // TEST ARROW
-    // const arrow = new Obstacle(100, 100, 'white', 5, 100);
-    // pieces.push(arrow);
+    setTimeout(lasers, 16000);
 }
 
 function arrows() {
@@ -269,6 +267,19 @@ function bumpers() {
     }
 }
 
+function lasers() {
+    for (let i = 0; i < 16; i++) {
+        setTimeout(function () {
+            if (i % 2 === 0) {
+                fireLaser(197, -890, 'orange', 6, 900);
+            }
+            else {
+                fireLaser(647, -890, 'orange', 6, 900);
+            }
+        }, i * 1000)
+    }
+}
+
 function fireArrow(x, y, color, width, height) {
     const arrow = new Obstacle(x, y, color, width, height);
     pieces.push(arrow);
@@ -291,6 +302,13 @@ function throwBumper(x, y, color, width, height) {
     const bumper = new Obstacle(x, y, color, width, height);
     pieces.push(bumper);
     movePieceUp(bumper, 8);
+}
+
+function fireLaser(x, y, color, width, height) {
+    const bumper = new Obstacle(x, y, color, width, height);
+    pieces.push(bumper);
+    // movePieceDown(bumper, 16);
+    setTimeout(movePieceDown, 500, bumper, 32);
 }
 
 // Move obstacles
