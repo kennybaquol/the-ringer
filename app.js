@@ -109,8 +109,8 @@ function startGame() {
     prompt = document.getElementById('prompt');
     prompt.style.display = "none";
     isRunning = true;
-    // firstPhase();
-    secondPhase();
+    firstPhase();
+    // secondPhase();
     runGame = setInterval(gameLoop, 1);
 }
 
