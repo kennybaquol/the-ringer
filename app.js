@@ -109,8 +109,8 @@ function startGame() {
     prompt = document.getElementById('prompt');
     prompt.style.display = "none";
     isRunning = true;
-    firstPhase();
-    // secondPhase();
+    // firstPhase();
+    secondPhase();
     runGame = setInterval(gameLoop, 1);
 }
 
@@ -187,17 +187,18 @@ function firstPhase() {
 function secondPhase() {
     console.log("running second phase");
     bumpers();
+    setTimeout(arrows2, 8000);
     // TEST ARROW
     // const arrow = new Obstacle(100, 100, 'white', 5, 100);
     // pieces.push(arrow);
 }
 
 function arrows() {
-    for (let j = 0; j < 28; j++) {
+    for (let j = 0; j < 12; j++) {
         setTimeout(function () {
-            for (let i = 1; i <= 4; i++) {
-                if (j % 2 === 0) {
-                    setTimeout(fireArrow, (i - 1) * 250, (i * 40), -99, 'white', 5, 100);
+            for (let i = 1; i <= 3; i++) {
+                if (i === 1 || i === 3) {
+                    setTimeout(fireArrow, (i - 1) * 125, (i * 40), -99, 'white', 5, 100);
                 }
                 else {
                     setTimeout(fireArrow, (i - 1) * 250, board.width - (i * 40), -99, 'white', 5, 100);
@@ -208,15 +209,25 @@ function arrows() {
 }
 
 function arrows2() {
-    for (let j = 0; j < 12; j++) {
+    let direction = 'left';
+    for (let j = 0; j < 28; j++) {
         setTimeout(function () {
-            for (let i = 1; i <= 4; i++) {
-                if (j % 2 === 0) {
-                    setTimeout(fireArrow, (i - 1) * 125, (i * 40), -99, 'white', 5, 100);
-                }
-                else {
-                    setTimeout(fireArrow, (i - 1) * 250, board.width - (i * 40), -99, 'white', 5, 100);
-                }
+            for (let l = 0; l < 3; l++) {
+                setTimeout(function () {
+                    console.log(`direction: ${direction}`);
+                    if (direction === 'left') {
+                        for (let i = 1; i <= 3; i++) {
+                            setTimeout(fireArrow, (i - 1) * 125, (i * 50), -99, 'white', 5, 100);
+                        }
+                        direction = 'right';
+                    }
+                    else if (direction === 'right') {
+                        for (let i = 1; i <= 3; i++) {
+                            setTimeout(fireArrow, (i - 1) * 125, board.width - (i * 50), -99, 'white', 5, 100);
+                        }
+                        direction = 'left';
+                    }
+                }, l * 250)
             }
         }, j * 2000)
     }
@@ -239,7 +250,7 @@ function rain() {
     for (let i = 0; i < 8; i++) {
         setTimeout(function () {
             for (let j = 0; j < 8; j++) {
-                setTimeout(commenceRain, j * 125, Math.floor(Math.random()*848) + 1, -4, 'purple', 5, 5);
+                setTimeout(commenceRain, j * 125, Math.floor(Math.random() * 848) + 1, -4, 'purple', 5, 5);
             }
         }, i * 2000)
     }
@@ -249,10 +260,10 @@ function bumpers() {
     for (let i = 0; i < 64; i++) {
         setTimeout(function () {
             if (i % 2 === 0) {
-                throwBumper(0, board.height, 'blue', board.width/2, 30);
+                throwBumper(0, board.height, 'blue', board.width / 2, 30);
             }
             else {
-                throwBumper(board.width/2, board.height, 'blue', board.width/2, 30);
+                throwBumper(board.width / 2, board.height, 'blue', board.width / 2, 30);
             }
         }, i * 500)
     }
