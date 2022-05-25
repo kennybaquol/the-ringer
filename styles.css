@@ -1,5 +1,5 @@
 body {
-    background-color: crimson;
+    background-color: rgb(144, 208, 255);
     text-align: center;
     color: whitesmoke;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -8,7 +8,7 @@ body {
 canvas {
     /* width: 100%;
     height: 80%; */
-    background-color: lightskyblue;
+    background-color: rgb(144, 208, 255);
 }
 
 footer {

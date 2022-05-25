@@ -111,9 +111,51 @@ function startGame() {
     isRunning = true;
     const song = new Audio("audio/workingTitle.mp3");
     song.play();
+    fadeBackground();
     setTimeout(firstPhase, 8000);
     // secondPhase();
     runGame = setInterval(gameLoop, 1);
+}
+
+// Fades the background color slowly to black one quarter note at a time
+function fadeBackground() {
+    let background = document.querySelector('body');
+    let colorValue1 = 144;
+    let colorValue2 = 208;
+    let colorValue3 = 255;
+    // rgb(0, 157, 255)
+    for (let i = 1; i <= 16; i++) {
+        setTimeout(function () {
+            colorValue1 = 144 - (i * 9);
+            colorValue2 = 208 - (i * 13);
+            colorValue3 = 255 - (i * 16);
+            background.style.backgroundColor = `rgb(${colorValue1}, ${colorValue2}, ${colorValue3})`;
+        }, (i - 1) * 500);
+    }
+}
+
+// Alternates the background's colors every quarter note
+function raveBackground() {
+    let background = document.querySelector('body');
+    let colors = [
+        "classic blue",
+        "living coral",
+        "ultra violet",
+        "greenery",
+        "rose quartz",
+        "serenity",
+        "radiand orchird",
+        "emerald"
+    ];
+    // rgb(0, 157, 255)
+    for (let i = 1; i <= 8; i++) {
+        setTimeout(function () {
+            colorValue1 = 144 - (i * 9);
+            colorValue2 = 208 - (i * 13);
+            colorValue3 = 255 - (i * 16);
+            background.style.backgroundColor = `rgb(${colorValue1}, ${colorValue2}, ${colorValue3})`;
+        }, (i - 1) * 500);
+    }
 }
 
 /**
@@ -189,6 +231,7 @@ function firstPhase() {
 // Start second phase
 function secondPhase() {
     console.log("running second phase");
+    raveBackground();
     bumpers();
     setTimeout(arrows2, 8000);
     setTimeout(lasers, 16000);
