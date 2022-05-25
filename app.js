@@ -223,8 +223,8 @@ function gameOver() {
 // Start first phase
 function firstPhase() {
     console.log("running first phase");
-    arrows();
-    setTimeout(flames, 8000);
+    arrows(31, 'one');
+    setTimeout(flames, 8000, 16);
     setTimeout(rain, 16000, 8);
     setTimeout(secondPhase, 32000);
     // TEST ARROW
@@ -237,7 +237,7 @@ function secondPhase() {
     console.log("running second phase");
     raveBackground();
     // bumpers();
-    setTimeout(arrows2, 8000);
+    setTimeout(arrows2, 8000, 20);
     setTimeout(lasers, 16000);
     setTimeout(interludePhase, 32000);
 }
@@ -257,44 +257,52 @@ function finalPhase() {
     background.style.backgroundColor = "rgb(144,208,255)";
     raveBackground();
     // setTimeout(raveBackground, 16000);
-    arrows();
-    flames();
-    setTimeout(arrows2, 8000);
-    setTimeout(rain, 16000, 4);
+    arrows(32, 'final');
+    flames(32);
+    setTimeout(arrows2, 8000, 16);
+    setTimeout(rain, 16000, 8);
     setTimeout(lasers, 16000);
 }
 
-function arrows() {
-    for (let j = 0; j < 30; j++) {
+function arrows(duration, phase) {
+    let startingWidth;
+    for (let j = 0; j < duration; j++) {
         setTimeout(function () {
             for (let i = 1; i <= 4; i++) {
-                if (j % 2 === 0) {
-                    setTimeout(fireArrow, (i - 1) * 250, (i * 50), -99, 'white', 5, 100);
+                if (phase === 'final') {
+                    // startingWidth = Math.floor(Math.random()*board.width-1);
+                    setTimeout(fireArrow, (i - 1) * 250, Math.floor(Math.random() * board.width - 1), -99, 'white', 5, 100);
                 }
-                else {
-                    setTimeout(fireArrow, (i - 1) * 250, board.width - (i * 50), -99, 'white', 5, 100);
+                else if (phase === 'one') {
+                    startingWidth = i * 65;
+                    if (j % 2 === 0) {
+                        setTimeout(fireArrow, (i - 1) * 250, startingWidth, -99, 'white', 5, 100);
+                    }
+                    else {
+                        setTimeout(fireArrow, (i - 1) * 250, board.width - startingWidth, -99, 'white', 5, 100);
+                    }
                 }
             }
         }, j * 1000)
     }
 }
 
-function arrows2() {
+function arrows2(duration) {
     let direction = 'left';
-    for (let j = 0; j < 20; j++) {
+    for (let j = 0; j < duration; j++) {
         setTimeout(function () {
             for (let l = 0; l < 3; l++) {
                 setTimeout(function () {
                     console.log(`direction: ${direction}`);
                     if (direction === 'left') {
                         for (let i = 1; i <= 3; i++) {
-                            setTimeout(fireArrow, (i - 1) * 125, (i * 50), -99, 'white', 5, 100);
+                            setTimeout(fireArrow, (i - 1) * 125, (i * 50), -99, 'whitesmoke', 5, 100);
                         }
                         direction = 'right';
                     }
                     else if (direction === 'right') {
                         for (let i = 1; i <= 3; i++) {
-                            setTimeout(fireArrow, (i - 1) * 125, board.width - (i * 50), -99, 'white', 5, 100);
+                            setTimeout(fireArrow, (i - 1) * 125, board.width - (i * 50), -99, 'whitesmoke', 5, 100);
                         }
                         direction = 'left';
                     }
@@ -304,8 +312,8 @@ function arrows2() {
     }
 }
 
-function flames() {
-    for (let i = 0; i < 16; i++) {
+function flames(duration) {
+    for (let i = 0; i < duration; i++) {
         setTimeout(function () {
             if (i % 2 === 0) {
                 launchFlame(-199, 125, 'red', 200, 30);
