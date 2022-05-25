@@ -149,7 +149,7 @@ function raveBackground() {
     ];
     let currentColor;
 
-    for (let t = 0; t < 4; t++) {
+    for (let t = 0; t < 8; t++) {
         setTimeout(function () {
             for (let i = 0; i < 8; i++) {
                 setTimeout(function () {
@@ -236,7 +236,7 @@ function firstPhase() {
 function secondPhase() {
     console.log("running second phase");
     raveBackground();
-    bumpers();
+    // bumpers();
     setTimeout(arrows2, 8000);
     setTimeout(lasers, 16000);
     setTimeout(interludePhase, 32000);
@@ -246,7 +246,18 @@ function secondPhase() {
 function interludePhase() {
     let background = document.querySelector('body');
     background.style.backgroundColor = "black";
+    fadeBackground('canvas');
     rain(4);
+    setTimeout(finalPhase, 16000);
+}
+
+// Start final phase
+function finalPhase() {
+    let background = document.querySelector('canvas');
+    background.style.backgroundColor = "rgb(144,208,255)";
+    raveBackground();
+    // setTimeout(raveBackground, 16000);
+    arrows();
 }
 
 function arrows() {
