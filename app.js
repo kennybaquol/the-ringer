@@ -81,14 +81,8 @@ function createPlayer() {
  * EVENT LISTENERS
 */
 
-// window.addEventListener("DOMContentLoaded", function (e) {
-
-// })
-
 // When the user presses Enter, create and render the player then start the game
 window.addEventListener('keydown', function (e) {
-    // console.log(`the ${e.key} key was pressed`);
-
     if (!isRunning) {
         switch (e.key) {
             case "Enter":
@@ -178,6 +172,7 @@ function gameLoop() {
     }
 }
 
+// Moves the player based on which keys are currently pressed down
 function checkPlayerMovement() {
     if (upPressed === true) {
         player.y > 0 ? player.y -= 2 : null;
@@ -194,9 +189,8 @@ function checkPlayerMovement() {
 }
 
 /**
- * COLLISION DETECTION
+ * COLLISION DETECTION LOGIC
 */
-
 function hitDetected() {
     let isHitDetected = false;
 
@@ -216,7 +210,6 @@ function gameOver() {
     // prompt.style.display = "inline";
     pieces = [];
     console.log(pieces);
-    // createPlayer();
 }
 
 // Start first phase
@@ -260,6 +253,7 @@ function finalPhase() {
     setTimeout(throwBumper, 42000, 0, board.height, 'blue', board.width - 100, 30);
 }
 
+// Creates and fires arrows
 function arrows(duration, phase) {
     let startingWidth;
     for (let j = 0; j < duration; j++) {
@@ -282,6 +276,7 @@ function arrows(duration, phase) {
     }
 }
 
+// Creates and fires arrows in 3s, 3 separate alternating times
 function arrows2(duration) {
     let direction = 'left';
     for (let j = 0; j < duration; j++) {
@@ -307,6 +302,7 @@ function arrows2(duration) {
     }
 }
 
+// Creates and launches flames
 function flames(duration) {
     for (let i = 0; i < duration; i++) {
         setTimeout(function () {
@@ -320,6 +316,7 @@ function flames(duration) {
     }
 }
 
+// Creates and commences acid rain
 function rain(duration) {
     for (let i = 0; i < duration; i++) {
         setTimeout(function () {
@@ -330,6 +327,7 @@ function rain(duration) {
     }
 }
 
+// Creates and throws bumpers
 function bumpers() {
     for (let i = 0; i < 64; i++) {
         setTimeout(function () {
@@ -343,6 +341,7 @@ function bumpers() {
     }
 }
 
+// Creates and fires lasers
 function lasers() {
     for (let i = 0; i < 16; i++) {
         setTimeout(function () {
@@ -383,13 +382,11 @@ function throwBumper(x, y, color, width, height) {
 function fireLaser(x, y, color, width, height) {
     const bumper = new Obstacle(x, y, color, width, height);
     pieces.push(bumper);
-    // movePieceDown(bumper, 16);
     setTimeout(movePieceDown, 500, bumper, 32);
 }
 
 // Move obstacles
 function movePieceUp(piece, rate) {
-    // console.log(piece);
     piece.y -= rate;
     // 
     if (piece.y > 0 - piece.height) {
@@ -398,12 +395,10 @@ function movePieceUp(piece, rate) {
     // Otherwise, stop moving it, and remove it from the pieces array
     else {
         pieces.splice(pieces.indexOf(piece), 1);
-        // console.log(pieces);
     }
 }
 
 function movePieceDown(piece, rate) {
-    // console.log(piece);
     piece.y += rate;
     // If the piece is still on screen, keep moving it
     if (piece.y < board.height) {
@@ -412,12 +407,10 @@ function movePieceDown(piece, rate) {
     // Otherwise, stop moving it, and remove it from the pieces array
     else {
         pieces.splice(pieces.indexOf(piece), 1);
-        // console.log(pieces);
     }
 }
 
 function movePieceLeft(piece, rate) {
-    // console.log(piece);
     piece.x -= rate;
     // If the piece is still on screen, keep moving it
     if (piece.x > 0) {
@@ -426,12 +419,10 @@ function movePieceLeft(piece, rate) {
     // Otherwise, stop moving it, and remove it from the pieces array
     else {
         pieces.splice(pieces.indexOf(piece), 1);
-        // console.log(pieces);
     }
 }
 
 function movePieceRight(piece, rate) {
-    // console.log(piece);
     piece.x += rate;
     // If the piece is still on screen, keep moving it
     if (piece.x < board.width) {
@@ -440,16 +431,14 @@ function movePieceRight(piece, rate) {
     // Otherwise, stop moving it, and remove it from the pieces array
     else {
         pieces.splice(pieces.indexOf(piece), 1);
-        // console.log(pieces);
     }
 }
-
 
 /**
  * KEYBOARD INTERACTION LOGIC
 */
 
-// Movement handler that lets the player move with WASD or the Arrow Keys
+// keyDown handler that triggers the appropriate boolean
 function keydownHandler(e) {
     if (e.key === "w" || e.key === "ArrowUp") {
         upPressed = true;
@@ -465,7 +454,7 @@ function keydownHandler(e) {
     }
 }
 
-// Movement handler that lets the player move with WASD or the Arrow Keys
+// keyUp handler that un-triggers the appropriate boolean
 function keyupHandler(e) {
     if (e.key === "w" || e.key === "ArrowUp") {
         upPressed = false;
@@ -480,9 +469,6 @@ function keyupHandler(e) {
         rightPressed = false;
     }
 }
-
-// If so --> stop the music, tell the player they've lost, and prompt them to restart
-
 
 /** 
  * ICEBOX 
