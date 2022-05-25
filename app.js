@@ -113,7 +113,6 @@ function startGame() {
     song.play();
     fadeBackground('body');
     setTimeout(firstPhase, 8000);
-    // secondPhase();
     runGame = setInterval(gameLoop, 1);
 }
 
@@ -123,7 +122,7 @@ function fadeBackground(element) {
     let colorValue1 = 144;
     let colorValue2 = 208;
     let colorValue3 = 255;
-    // rgb(0, 157, 255)
+
     for (let i = 1; i <= 16; i++) {
         setTimeout(function () {
             colorValue1 = 144 - (i * 9);
@@ -227,16 +226,13 @@ function firstPhase() {
     setTimeout(flames, 8000, 16);
     setTimeout(rain, 16000, 8);
     setTimeout(secondPhase, 32000);
-    // TEST ARROW
-    // const arrow = new Obstacle(100, 100, 'white', 5, 100);
-    // pieces.push(arrow);
 }
 
 // Start second phase
 function secondPhase() {
     console.log("running second phase");
     raveBackground();
-    // bumpers();
+    bumpers();
     setTimeout(arrows2, 8000, 20);
     setTimeout(lasers, 16000);
     setTimeout(interludePhase, 32000);
@@ -256,13 +252,12 @@ function finalPhase() {
     let background = document.querySelector('canvas');
     background.style.backgroundColor = "rgb(144,208,255)";
     raveBackground();
-    // setTimeout(raveBackground, 16000);
     arrows(32, 'final');
     flames(32);
-    setTimeout(arrows2, 8000, 18);
+    setTimeout(arrows2, 8000, 16);
     setTimeout(rain, 16000, 8);
     setTimeout(lasers, 16000);
-    setTimeout(throwBumper, 39000, 0, board.height, 'blue', board.width / 2, 30);
+    setTimeout(throwBumper, 42000, 0, board.height, 'blue', board.width - 100, 30);
 }
 
 function arrows(duration, phase) {
@@ -271,7 +266,6 @@ function arrows(duration, phase) {
         setTimeout(function () {
             for (let i = 1; i <= 4; i++) {
                 if (phase === 'final') {
-                    // startingWidth = Math.floor(Math.random()*board.width-1);
                     setTimeout(fireArrow, (i - 1) * 250, Math.floor(Math.random() * board.width - 1), -99, 'white', 5, 100);
                 }
                 else if (phase === 'one') {
@@ -398,7 +392,7 @@ function movePieceUp(piece, rate) {
     // console.log(piece);
     piece.y -= rate;
     // 
-    if (piece.y > 0) {
+    if (piece.y > 0 - piece.height) {
         setTimeout(movePieceUp, 11, piece, rate);
     }
     // Otherwise, stop moving it, and remove it from the pieces array
