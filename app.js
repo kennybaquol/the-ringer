@@ -20,8 +20,14 @@ let runGame;
 // Variable to tell if the game is live
 let isRunning = false;
 
+// Variable for the song that will play during the game
+const song = new Audio("audio/workingTitle.mp3");
+
 // Array that holds all current game pieces
 let pieces = [];
+
+// Boolean to track win/lose status
+let atEnd = false;
 
 // Booleans to keep track of which keys are pressed down
 let upPressed = false;
@@ -101,9 +107,8 @@ window.addEventListener('keyup', keyupHandler);
 // Run the game
 function startGame() {
     prompt = document.getElementById('prompt');
-    prompt.style.display = "none";
+    prompt.textContent = "Use WASD or the Arrow Keys to move";
     isRunning = true;
-    const song = new Audio("audio/workingTitle.mp3");
     song.play();
     fadeBackground('body');
     setTimeout(firstPhase, 8000);
@@ -164,8 +169,7 @@ function gameLoop() {
     ctx.clearRect(0, 0, board.width, board.height);
     checkPlayerMovement();
     renderAll();
-    // console.log(hitDetected());
-    if (hitDetected() === true && 1 === 2) {
+    if (hitDetected() === true) {
         clearInterval(runGame);
         gameOver();
         return;
@@ -206,8 +210,13 @@ function hitDetected() {
 
 // End game
 function gameOver() {
-    // isRunning = false;
-    // prompt.style.display = "inline";
+    if (!atEnd) {
+        prompt.textContent = "GAME OVER: YOU LOSE!"
+        song.pause();
+    }
+    else {
+        prompt.textContent = "VICTORY!"
+    }
     pieces = [];
     console.log(pieces);
 }
