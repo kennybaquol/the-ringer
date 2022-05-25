@@ -111,15 +111,15 @@ function startGame() {
     isRunning = true;
     const song = new Audio("audio/workingTitle.mp3");
     song.play();
-    fadeBackground();
+    fadeBackground('body');
     setTimeout(firstPhase, 8000);
     // secondPhase();
     runGame = setInterval(gameLoop, 1);
 }
 
 // Fades the background color slowly to black one quarter note at a time
-function fadeBackground() {
-    let background = document.querySelector('body');
+function fadeBackground(element) {
+    let background = document.querySelector(element);
     let colorValue1 = 144;
     let colorValue2 = 208;
     let colorValue3 = 255;
@@ -138,23 +138,27 @@ function fadeBackground() {
 function raveBackground() {
     let background = document.querySelector('body');
     let colors = [
-        "classic blue",
-        "living coral",
-        "ultra violet",
-        "greenery",
-        "rose quartz",
-        "serenity",
-        "radiand orchird",
-        "emerald"
+        "#34568B", // Classic Blue
+        "#FF6F61", // Living Coral
+        "#6B5B95", // Ultra Violet
+        "rgb(136, 176, 75)", // Greenery
+        "rgb(247, 202, 201)", // Rose Quartz
+        "rgb(146, 168, 209)", // Serenity
+        "rgb(181, 101, 167)", // Radiand Orchid
+        "rgb(0, 155, 119)" // Emerald
     ];
-    // rgb(0, 157, 255)
-    for (let i = 1; i <= 8; i++) {
+    let currentColor;
+
+    for (let t = 0; t < 4; t++) {
         setTimeout(function () {
-            colorValue1 = 144 - (i * 9);
-            colorValue2 = 208 - (i * 13);
-            colorValue3 = 255 - (i * 16);
-            background.style.backgroundColor = `rgb(${colorValue1}, ${colorValue2}, ${colorValue3})`;
-        }, (i - 1) * 500);
+            for (let i = 0; i < 8; i++) {
+                setTimeout(function () {
+                    currentColor = colors[i];
+                    console.log(currentColor);
+                    background.style.backgroundColor = `${currentColor}`;
+                }, i * 500);
+            }
+        }, t * 4000);
     }
 }
 
@@ -240,6 +244,8 @@ function secondPhase() {
 
 // Start interlude phase
 function interludePhase() {
+    let background = document.querySelector('body');
+    background.style.backgroundColor = "black";
     rain(4);
 }
 
