@@ -12,7 +12,7 @@ let ctx = board.getContext("2d");
 let player;
 
 // Variable to control the text below the game board
-let prompt;
+let prompt = document.getElementById('prompt');;
 
 // Variable to control interval timer
 let runGame;
@@ -25,6 +25,9 @@ const song = new Audio("audio/workingTitle.mp3");
 
 // Array that holds all current game pieces
 let pieces = [];
+
+// Boolean to determine easy or regular difficulty
+let ezMode = false;
 
 // Boolean to track win/lose status
 let atEnd = false;
@@ -94,6 +97,11 @@ window.addEventListener('keydown', function (e) {
             case "Enter":
                 startGame();
                 break;
+            case "~":
+                ezMode = true;
+                prompt.textContent = `EASY MODE ACTIVATED: \nPRESS "ENTER" TO BEGIN`;
+                // startGame();
+                break;
         }
     }
 })
@@ -106,13 +114,18 @@ window.addEventListener('keyup', keyupHandler);
 
 // Run the game
 function startGame() {
-    prompt = document.getElementById('prompt');
+    // prompt = document.getElementById('prompt');
     prompt.textContent = "Use WASD or the Arrow Keys to move";
     isRunning = true;
     song.play();
     fadeBackground('body');
     setTimeout(firstPhase, 8000);
-    runGame = setInterval(gameLoop, 1);
+    if (ezMode) {
+        runGame = setInterval(easyGameLoop, 1);
+    }
+    else {
+        runGame = setInterval(gameLoop, 1);
+    }
 }
 
 // Fades the background color slowly to black one quarter note at a time
@@ -176,6 +189,13 @@ function gameLoop() {
     }
 }
 
+// Easy version of game where you can't die
+function easyGameLoop() {
+    ctx.clearRect(0, 0, board.width, board.height);
+    checkPlayerMovement();
+    renderAll();
+}
+
 // Moves the player based on which keys are currently pressed down
 function checkPlayerMovement() {
     if (upPressed === true) {
@@ -215,7 +235,12 @@ function gameOver() {
         song.pause();
     }
     else {
-        prompt.textContent = "VICTORY!"
+        if (ezMode) {
+            prompt.textContent = "EZ VICTORY! \n (NOW TRY WITHOUT EZ MODE)"
+        }
+        else {
+            prompt.textContent = "VICTORY!"
+        }
         raveBackground();
     }
     pieces = [];
