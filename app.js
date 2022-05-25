@@ -109,7 +109,9 @@ function startGame() {
     prompt = document.getElementById('prompt');
     prompt.style.display = "none";
     isRunning = true;
-    firstPhase();
+    const song = new Audio("audio/workingTitle.mp3");
+    song.play();
+    setTimeout(firstPhase, 8000);
     // secondPhase();
     runGame = setInterval(gameLoop, 1);
 }
