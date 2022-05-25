@@ -99,8 +99,7 @@ window.addEventListener('keydown', function (e) {
                 break;
             case "~":
                 ezMode = true;
-                prompt.textContent = `EASY MODE ACTIVATED: \nPRESS "ENTER" TO BEGIN`;
-                // startGame();
+                prompt.textContent = `EASY MODE ACTIVATED:\nPRESS "ENTER" TO BEGIN`;
                 break;
         }
     }
@@ -228,7 +227,7 @@ function hitDetected() {
     return isHitDetected;
 }
 
-// End game
+// End game and alter footer text based on win/loss
 function gameOver() {
     if (!atEnd) {
         prompt.textContent = "GAME OVER: YOU LOSE!"
@@ -236,7 +235,7 @@ function gameOver() {
     }
     else {
         if (ezMode) {
-            prompt.textContent = "EZ VICTORY! \n (NOW TRY WITHOUT EZ MODE)"
+            prompt.textContent = "EZ VICTORY!\n(NOW TRY WITHOUT EZ MODE)"
         }
         else {
             prompt.textContent = "VICTORY!"
@@ -244,7 +243,6 @@ function gameOver() {
         raveBackground();
     }
     pieces = [];
-    console.log(pieces);
 }
 
 // Start first phase
@@ -512,3 +510,4 @@ function keyupHandler(e) {
 /** 
  * ICEBOX 
 */
+

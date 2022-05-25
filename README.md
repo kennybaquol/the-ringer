@@ -10,7 +10,7 @@ The player begins on a static background. When they hit the start button, the mo
 - [X] Switch turns between two players, or have the user play the computer (AI or obstacles)
 - [X] Design logic for winning & visually display which player won
 - [X] Include separate HTML / CSS / JavaScript files	
-- [] Stick with KISS (Keep It Simple Stupid) and DRY (Don't Repeat Yourself) principles	
+- [X] Stick with KISS (Keep It Simple Stupid) and DRY (Don't Repeat Yourself) principles	
 - [X] Use Javascript for DOM manipulation 	
 - [] Deploy your game online, where the rest of the world can access it**	
 - [X] Use semantic markup for HTML and CSS (adhere to best practices)	
@@ -23,16 +23,18 @@ The player begins on a static background. When they hit the start button, the mo
 HTML5, CSS, and Vanilla JavaScript (logic, DOM Maniuplation, & Canvas). No external libraries used in the making of this game.
 
 ## Approach Taken
-*TALK ABOUT APPROACH HERE*
+This game's code revolves around functions creating objects at precise intervals that align with the music that plays in the background. Once the game starts, the canvas (along with the player and all obstacles) renders and checks for collisions every millisecond. If the player hits any obstacle at any time, the game is over...but if they manage to make it to the end, a victory message is displayed alongside a rave of 8 of the world's favorite CSS colors from 2012 to 2020. Hope you enjoy!
 
 ## Installation
 No installation required if you visit the hosted website: 
 *ENTER URL HERE*
 
-## Unsolved Problems
-*ENTER UNSOLVED PROBLEMS HERE*
-
-<!-- ASK IF 'HOW IT WORKS'/'JAVASCRIPT' IS NEEDED -->
+## Possible Future Features
+```
+- [] PLACEHOLDER
+- [] PLACEHOLDER
+- [] PLACEHOLDER
+```
 
 ## Wireframe
 ![wireframe](https://github.com/kennybaquol/working-title/blob/3e4c8e7e8c4cb951b2aeb8c778a837163533fbc2/imgs/project-1-wireframe.jpg)
