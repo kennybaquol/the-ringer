@@ -216,6 +216,7 @@ function gameOver() {
     }
     else {
         prompt.textContent = "VICTORY!"
+        raveBackground();
     }
     pieces = [];
     console.log(pieces);
@@ -260,6 +261,10 @@ function finalPhase() {
     setTimeout(rain, 16000, 8);
     setTimeout(lasers, 16000);
     setTimeout(throwBumper, 42000, 0, board.height, 'blue', board.width - 100, 30);
+    setTimeout(function () {
+        atEnd = true;
+        gameOver();
+    }, 45000);
 }
 
 // Creates and fires arrows
@@ -330,7 +335,7 @@ function rain(duration) {
     for (let i = 0; i < duration; i++) {
         setTimeout(function () {
             for (let j = 0; j < 8; j++) {
-                setTimeout(commenceRain, j * 125, Math.floor(Math.random() * 848) + 1, -4, 'purple', 5, 5);
+                setTimeout(commenceRain, j * 125, Math.floor(Math.random() * 848) + 1, -4, 'light purple', 5, 5);
             }
         }, i * 2000)
     }
