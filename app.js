@@ -258,6 +258,10 @@ function finalPhase() {
     raveBackground();
     // setTimeout(raveBackground, 16000);
     arrows();
+    flames();
+    setTimeout(arrows2, 8000);
+    setTimeout(rain, 16000, 4);
+    setTimeout(lasers, 16000);
 }
 
 function arrows() {
@@ -265,10 +269,10 @@ function arrows() {
         setTimeout(function () {
             for (let i = 1; i <= 4; i++) {
                 if (j % 2 === 0) {
-                    setTimeout(fireArrow, (i - 1) * 250, (i * 40), -99, 'white', 5, 100);
+                    setTimeout(fireArrow, (i - 1) * 250, (i * 50), -99, 'white', 5, 100);
                 }
                 else {
-                    setTimeout(fireArrow, (i - 1) * 250, board.width - (i * 40), -99, 'white', 5, 100);
+                    setTimeout(fireArrow, (i - 1) * 250, board.width - (i * 50), -99, 'white', 5, 100);
                 }
             }
         }, j * 1000)
@@ -301,7 +305,7 @@ function arrows2() {
 }
 
 function flames() {
-    for (let i = 0; i < 22; i++) {
+    for (let i = 0; i < 16; i++) {
         setTimeout(function () {
             if (i % 2 === 0) {
                 launchFlame(-199, 125, 'red', 200, 30);
