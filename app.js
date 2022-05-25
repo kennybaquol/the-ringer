@@ -172,7 +172,7 @@ function gameLoop() {
     checkPlayerMovement();
     renderAll();
     // console.log(hitDetected());
-    if (hitDetected() === true) {
+    if (hitDetected() === true && 1 === 2) {
         clearInterval(runGame);
         gameOver();
         return;
@@ -259,9 +259,10 @@ function finalPhase() {
     // setTimeout(raveBackground, 16000);
     arrows(32, 'final');
     flames(32);
-    setTimeout(arrows2, 8000, 16);
+    setTimeout(arrows2, 8000, 18);
     setTimeout(rain, 16000, 8);
     setTimeout(lasers, 16000);
+    setTimeout(throwBumper, 39000, 0, board.height, 'blue', board.width / 2, 30);
 }
 
 function arrows(duration, phase) {
