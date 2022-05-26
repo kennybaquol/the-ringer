@@ -113,7 +113,6 @@ window.addEventListener('keyup', keyupHandler);
 
 // Run the game
 function startGame() {
-    // prompt = document.getElementById('prompt');
     prompt.textContent = "Use WASD or the Arrow Keys to move";
     isRunning = true;
     song.play();
@@ -164,7 +163,6 @@ function raveBackground() {
             for (let i = 0; i < 8; i++) {
                 setTimeout(function () {
                     currentColor = colors[i];
-                    console.log(currentColor);
                     background.style.backgroundColor = `${currentColor}`;
                 }, i * 500);
             }
@@ -239,15 +237,14 @@ function gameOver() {
         }
         else {
             prompt.textContent = "VICTORY!"
+            raveBackground();
         }
-        raveBackground();
     }
     pieces = [];
 }
 
 // Start first phase
 function firstPhase() {
-    console.log("running first phase");
     arrows(31, 'one');
     setTimeout(flames, 8000, 16);
     setTimeout(rain, 16000, 8);
@@ -256,7 +253,6 @@ function firstPhase() {
 
 // Start second phase
 function secondPhase() {
-    console.log("running second phase");
     raveBackground();
     bumpers();
     setTimeout(arrows2, 8000, 20);
@@ -320,7 +316,6 @@ function arrows2(duration) {
         setTimeout(function () {
             for (let l = 0; l < 3; l++) {
                 setTimeout(function () {
-                    console.log(`direction: ${direction}`);
                     if (direction === 'left') {
                         for (let i = 1; i <= 3; i++) {
                             setTimeout(fireArrow, (i - 1) * 125, (i * 50), -99, 'whitesmoke', 5, 100);
