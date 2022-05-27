@@ -27,7 +27,7 @@ This game's code revolves around functions creating objects at precise intervals
 
 ## Installation
 No installation required if you visit the hosted website: 
-*ENTER URL HERE*
+https://kennybaquol.github.io/the-ringer/
 
 ## Possible Future Features
 ```
